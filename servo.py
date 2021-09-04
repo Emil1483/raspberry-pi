@@ -5,20 +5,23 @@ from math import sin
 GPIO.setmode(GPIO.BOARD)
 
 pin1 = 11
-pin2 = 13
+pin2 = 15
 
 GPIO.setup(pin1, GPIO.OUT)
-servo1 = GPIO.PWM(pin1, 50)
+servo1 = GPIO.PWM(pin1, 40)
 
 GPIO.setup(pin2, GPIO.OUT)
-servo2 = GPIO.PWM(pin2, 50)
+servo2 = GPIO.PWM(pin2, 40)
 
 servo1.start(0)
 servo2.start(0)
 
 def angle_to_duty(angle):
     assert angle >= 0 and angle <= 180
-    return angle / 18 + 2
+    max_angle = 180.0
+    a = angle * max_angle / 180
+    print(a)
+    return a / 18 + 2
 
 def move_servo1(a):
     servo1.ChangeDutyCycle(angle_to_duty(a))

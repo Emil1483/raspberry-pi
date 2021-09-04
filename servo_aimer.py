@@ -1,5 +1,12 @@
-from servo import *
-from tkinter import *
+from gpiozero import Servo, Device
+from Tkinter import *
+from time import sleep
+from gpiozero.pins.pigpio import PiGPIOFactory
+
+Device.pin_factory = PiGPIOFactory()
+
+servo1 = Servo(17)
+servo2 = Servo(22)
 
 app = Tk()
 
@@ -11,8 +18,16 @@ def motion(event):
 
     x, y = float(event.x), float(event.y)
 
-    move_servo1(x * 180 / screen_width)
-    move_servo2(y * 180 / screen_height)
+    x = screen_width - x
+    y = screen_height - y
+
+    servo1.value = x / screen_width
+    servo2.value = y / screen_height
+
+    # sleep(0.5)
+
+    print(servo1.value)
+    print(servo2.value)
 
 app.bind('<Motion>', motion)
 
